@@ -24,7 +24,7 @@ tamnum = 16
 
 #%%
 im_kz = 0
-modo = 0
+modo = 1
 R1 = 70*1e-9
 R2 = 85*1e-9
 
@@ -66,7 +66,7 @@ except ModuleNotFoundError as error:
     sys.path.insert(1, det_path)  
 
 
-ε1,ε2,ε3 = ε_Ag,ε_SiO2,ε_Ag
+ε1,ε2,ε3 = ε_CdS,ε_SiO2,ε_Ag
 
 #%%
 
@@ -116,8 +116,8 @@ for Energy in Elist_NM:
     
     plt.title(title +', modo = %i, Im($k_z$) = %.2e, R1 = %i nm, R2 = %i nm' %(modo,im_kz,R1*1e9,R2*1e9),fontsize=tamtitle)
     plt.plot(x,detlist,'.',ms=10,alpha=0.7,label='E=%.2e eV' %(Energy))
-#    plt.ylabel('|det(L)|',fontsize=tamletra)
-    plt.ylabel('min{sing. values}',fontsize=tamletra)
+    plt.ylabel('|det(L)|',fontsize=tamletra)
+#    plt.ylabel('min{sing. values}',fontsize=tamletra)
     plt.xlabel('Re($k_z$) [$m^{-1}$]',fontsize=tamletra)
     plt.xscale('log')
     plt.yscale('log')
@@ -136,26 +136,50 @@ det_M_NM = []
 kz_real_min_NM = []
 kz_imag_min_NM = []
 
-if modo==0:
-    if R1==5*1e-9:
-        cond_inicial = np.array([24638187.70156102,350640.09316422])
-    
-    if R1==40*1e-9:
-        cond_inicial = np.array([1e7,1e5])
-    
-    if R1==70*1e-9:
-        cond_inicial=np.array([11971949.74033338,68813.08756318])
-#cond_inicial = np.array([1.17*1e7,66240])
+if (ε1,ε2,ε3) == (ε_Ag,ε_SiO2,ε_Ag):
+    if modo==0:
+        if R1==5*1e-9:
+            cond_inicial = np.array([24638187.70156102,350640.09316422])
         
-if modo==1:
-    if R1==5*1e-9:
-        cond_inicial = np.array([203557.97975328687 , -199927851.60810703])
+        if R1==40*1e-9:
+            cond_inicial = np.array([1e7,1e5])
+        
+        if R1==70*1e-9:
+            cond_inicial=np.array([11971949.74033338,68813.08756318])
+    #cond_inicial = np.array([1.17*1e7,66240])
+            
+    elif modo==1:
+        if R1==5*1e-9:
+            cond_inicial = np.array([203557.97975328687 , -199927851.60810703])
+        
+        if R1==40*1e-9:
+            cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
     
-    if R1==40*1e-9:
-        cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
+        if R1==70*1e-9:
+            cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
+            
 
-    if R1==70*1e-9:
-        cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
+if (ε1,ε2,ε3) == (ε_CdS,ε_SiO2,ε_Ag):
+    if modo==0:
+        if R1==0:
+            cond_inicial = np.array([24638187.70156102,350640.09316422])
+        
+        if R1==30*1e-9:
+            cond_inicial = np.array([1e7,1e8])
+        
+        if R1==70*1e-9:
+            cond_inicial=np.array([8401429.14167578,75501.33357499144])
+    #cond_inicial = np.array([1.17*1e7,66240])
+            
+    elif modo==1:
+        if R1==0:
+            cond_inicial = np.array([203557.97975328687 , -199927851.60810703])
+        
+        if R1==30*1e-9:
+            cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
+    
+        if R1==70*1e-9:
+            cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
 
 for Energy in Elist_NM:  
     def det_M_1variable(Re_kz):
