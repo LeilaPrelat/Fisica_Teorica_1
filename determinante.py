@@ -11,7 +11,7 @@ import numpy as np
 
 #%% 
 
-print('Se define el determinante de 8x8')
+print('3 medios: Se define el determinante de 8x8')
 
 def det_M3medios(kz,E,modo,r1,r2,ε1,ε2,ε3):
     π = np.pi
@@ -107,7 +107,7 @@ def det_M3medios(kz,E,modo,r1,r2,ε1,ε2,ε3):
 
 #%%
 
-print('Se define el determinante de 4x4')
+print('2 medios: Se define el determinante de 4x4')
 
 
 def det_M2medios(kz,E,modo,R,ε2,ε3):
