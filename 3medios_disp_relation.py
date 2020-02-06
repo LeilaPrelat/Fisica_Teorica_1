@@ -129,8 +129,8 @@ for Energy in Elist_NM:
 #%%
 print('Minimizacion con Nelder-Mead del determinante hallando Re(kz) y Im(kz)')
 
-Ne = int(3*1e3)        
-Elist_NM = np.linspace(0.8,3.8,Ne)
+Ne = int(4*1e3)        
+Elist_NM = np.linspace(0.8,4.2,Ne)
 
 det_M_NM = []
 kz_real_min_NM = []
@@ -141,10 +141,10 @@ if (ε1,ε2,ε3) == (ε_Ag,ε_SiO2,ε_Ag):
         if R1==5*1e-9:
             cond_inicial = np.array([24638187.70156102,350640.09316422])
         
-        if R1==40*1e-9:
+        elif R1==40*1e-9:
             cond_inicial = np.array([1e7,1e5])
         
-        if R1==70*1e-9:
+        elif R1==70*1e-9:
             cond_inicial=np.array([11971949.74033338,68813.08756318])
     #cond_inicial = np.array([1.17*1e7,66240])
             
@@ -152,33 +152,27 @@ if (ε1,ε2,ε3) == (ε_Ag,ε_SiO2,ε_Ag):
         if R1==5*1e-9:
             cond_inicial = np.array([203557.97975328687 , -199927851.60810703])
         
-        if R1==40*1e-9:
+        elif R1==40*1e-9:
             cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
     
-        if R1==70*1e-9:
+        elif R1==70*1e-9:
             cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
             
 
 if (ε1,ε2,ε3) == (ε_CdS,ε_SiO2,ε_Ag):
-    if modo==0:
-        if R1==0:
-            cond_inicial = np.array([24638187.70156102,350640.09316422])
-        
+    if modo==0:       
         if R1==30*1e-9:
-            cond_inicial = np.array([1e7,1e8])
+            cond_inicial = np.array([8199425.391800586,20770.908764307176])
         
-        if R1==70*1e-9:
+        elif R1==70*1e-9:
             cond_inicial=np.array([8401429.14167578,75501.33357499144])
     #cond_inicial = np.array([1.17*1e7,66240])
             
-    elif modo==1:
-        if R1==0:
-            cond_inicial = np.array([203557.97975328687 , -199927851.60810703])
-        
+    elif modo==1:        
         if R1==30*1e-9:
             cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
     
-        if R1==70*1e-9:
+        elif R1==70*1e-9:
             cond_inicial = np.array([1.80898938e+06,2.12055049e+08])
 
 for Energy in Elist_NM:  
@@ -200,7 +194,6 @@ for Energy in Elist_NM:
     det_M_NM.append(det_M_2variable([res.x[0],res.x[1]]))
     cond_inicial = np.array([res.x[0],res.x[1]])
 
-#%%
    
 print('Guardar la relacion de dispersión obtenida')
     
@@ -212,7 +205,7 @@ try:
 except FileExistsError as error: 
     print(error)
 
-folder_R1 = 'R1' + '_' + str(R1*1e9)   
+folder_R1 = 'R1' + '_' + str(int(R1*1e9))   
 try:
     os.chdir(det_path + '/' + folder_mediums)
     os.mkdir(folder_R1)

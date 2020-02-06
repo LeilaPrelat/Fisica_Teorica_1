@@ -30,8 +30,8 @@ h = 4.135667731*1e-15 #eV/s
     
 #%%
 
-modo = 1
-R1 =40*1e-9
+modo = 0
+R1 =70*1e-9
 R2 = 85*1e-9
 
 ε_path = r'/home/leila/Desktop/Teo1_definitivo2/dielectric_functions'
@@ -41,9 +41,12 @@ det_path = r'/home/leila/Desktop/Teo1_definitivo2'
 
 #%%
 
+print('Importar las funciones dielectricas de los medios')
+
 try:
     sys.path.insert(1, ε_path)
     from dielectric_functions import ε_functions
+    from diff_dielectric_functions import diff_ε
 except ModuleNotFoundError as error:
     print(error)
     ε_path = input('path de la carpeta dielectric_functions')
@@ -52,6 +55,10 @@ except ModuleNotFoundError as error:
 ε_SiO2 = ε_functions.ε_SiO2
 ε_Ag = ε_functions.ε_Ag
 ε_CdS = ε_functions.ε_CdS
+
+diff_ε_SiO2 = diff_ε.ε_SiO2
+diff_ε_Ag = diff_ε.ε_Ag
+diff_ε_CdS = diff_ε.ε_CdS
 
 try: 
     ε_functions.load_data(ε_path)
@@ -64,6 +71,7 @@ except OSError or IOError as error:
     plt.close('all')
 
 ε1,ε2,ε3 = ε_Ag,ε_SiO2,ε_Ag
+der_ε1,der_ε2,der_ε3 = diff_ε_Ag,diff_ε_SiO2,diff_ε_Ag
 
 #%%
 
@@ -95,7 +103,7 @@ title = title1 + '/' + title2 + '/' + title3
 print('Importar la relacion de dispersion')
 
 folder_mediums = title1 + '_' + title2 + '_' + title3
-folder_R1 = 'R1' + '_' + str(R1*1e9)   
+folder_R1 = 'R1' + '_' + str(int(R1*1e9)) 
 os.chdir(det_path + '/' + folder_mediums + '/' + folder_R1)
 
 try:   
@@ -541,15 +549,82 @@ for indice in list_indice:
             campo_E.append(E_1variable(1,np.abs(ρ)))
         elif np.abs(ρ)<=R2:
             campo_E.append(E_1variable(2,np.abs(ρ)))
-        elif np.abs(ρ)<=100*1e-9:
+        else:
             campo_E.append(E_1variable(3,np.abs(ρ)))
             
     campo_E = np.array(campo_E)/np.max(campo_E)        
     lista_ρ = np.array(lista_ρ)*1e9
     Energy = Elist_NM2[indice]
     plt.title(title +', modo = %i, R1 = %i nm, R2 = %i nm' %(modo,R1*1e9,R2*1e9),fontsize=tamtitle)
-    plt.plot(lista_ρ, campo_E,'.-',ms=10,alpha=0.7,label = 'Energia %.2f eV' %(Energy))
+    plt.plot(lista_ρ, campo_E,'.-',color = lista_colores[color],ms=10,alpha=0.7,label = 'Energia %.2f eV' %(Energy))
     plt.ylabel('Campo |E|$^2$',fontsize=tamletra)
+    plt.xlabel('x[nm]',fontsize=tamletra)
+    plt.legend(loc='upper left',markerscale=3,fontsize=tamlegend)
+    plt.tick_params(labelsize = tamnum)
+    plt.grid(1)
+    plt.tight_layout(pad=2.5, w_pad=1, h_pad=1)
+
+#%%
+
+print('Definir la funcion densidad de energia')
+
+def energy_density(indice,medio,ρ,φ,z,ε1,ε2,ε3):
+    indice = int(indice)
+    campo_H = np.abs(Htot(indice,medio,ρ,φ,z,ε1,ε2,ε3)[0])
+    campo_E = np.abs(Etot(indice,medio,ρ,φ,z,ε1,ε2,ε3)[0])
+    
+    E = Elist_NM2[indice]
+        
+    def epsi(medio):
+        if medio==1:            
+            return ε1(E)
+        if medio==2:
+            return ε2(E)
+        if medio==3:
+            return ε3(E)
+    
+    def der(E):
+        if medio==1:            
+            return der_ε1(E)
+        if medio==2:
+            return der_ε2(E)
+        if medio==3:
+            return der_ε3(E)  
+    
+    rta = der(E)*campo_E+μ0*campo_H
+    return 0.5*(rta.real)
+    
+#%%
+    
+print('Graficar el campo energy density vs x para cada medio')
+
+list_indice=[int(indicecerca)]
+
+color = 0
+plt.figure(figsize=tamfig)
+for indice in list_indice:
+    color = color + 1    
+    def energy_density1variable(medio,ρ):
+        φ,z = [0,0]
+        return energy_density(indice,medio,ρ,φ,z,ε1,ε2,ε3)
+    
+    N = int(1e3)
+    lista_ρ = np.linspace(-100*1e-9,100*1e-9,N)
+    e_density = []
+    for ρ in lista_ρ:
+        if np.abs(ρ)<=R1:
+            e_density.append(energy_density1variable(1,np.abs(ρ)))
+        elif np.abs(ρ)<=R2:
+            e_density.append(energy_density1variable(2,np.abs(ρ)))
+        else:
+            e_density.append(energy_density1variable(3,np.abs(ρ)))
+            
+    e_density = np.array(e_density)/np.max(e_density)        
+    lista_ρ = np.array(lista_ρ)*1e9
+    Energy = Elist_NM2[indice]
+    plt.title(title +', modo = %i, R1 = %i nm, R2 = %i nm' %(modo,R1*1e9,R2*1e9),fontsize=tamtitle)
+    plt.plot(lista_ρ, e_density,'.-',color = lista_colores[color],ms=10,alpha=0.7,label = 'Energia %.2f eV' %(Energy))
+    plt.ylabel('$\omega_e$',fontsize=tamletra)
     plt.xlabel('x[nm]',fontsize=tamletra)
     plt.legend(loc='upper left',markerscale=3,fontsize=tamlegend)
     plt.tick_params(labelsize = tamnum)

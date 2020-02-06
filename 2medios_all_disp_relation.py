@@ -91,7 +91,7 @@ for modo in list_modos:
             color = color +1
         
             folder_mediums = title2 + '_' + title3
-            folder_R = 'R' + '_' + str(R*1e9)   
+            folder_R = 'R' + '_' + str(int(R*1e9)) 
             os.chdir(det_path + '/' + folder_mediums + '/' + folder_R)
             
             try:   

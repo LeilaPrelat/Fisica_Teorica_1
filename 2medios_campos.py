@@ -87,7 +87,7 @@ title = title2 + '/' + title3
 print('Importar la relacion de dispersion')
 
 folder_mediums = title2 + '_' + title3
-folder_R = 'R' + '_' + str(R*1e9)   
+folder_R = 'R' + '_' + str(int(R*1e9))   
 os.chdir(det_path + '/' + folder_mediums + '/' + folder_R)
 
 try:   

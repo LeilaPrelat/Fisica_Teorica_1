@@ -182,14 +182,14 @@ try:
 except FileExistsError as error: 
     print(error)
 
-folder_R1 = 'R' + '_' + str(R*1e9)   
+folder_R = 'R' + '_' + str(R*1e9)   
 try:
     os.chdir(det_path + '/' + folder_mediums)
-    os.mkdir(folder_R1)
+    os.mkdir(folder_R)
 except FileExistsError as error: 
     print(error)
  
-os.chdir(det_path + '/' + folder_mediums + '/' + folder_R1)
+os.chdir(det_path + '/' + folder_mediums + '/' + folder_R)
 np.savetxt('NM_mod' + str(modo) + '_E_list.txt',[Elist_NM],delimiter='\t')
 np.savetxt('NM_mod' + str(modo) + '_Rekz_list.txt',[kz_real_min_NM],delimiter='\t')   
 np.savetxt('NM_mod' + str(modo) + '_Imkz_list.txt',[kz_imag_min_NM],delimiter='\t')   
