@@ -114,11 +114,6 @@ except OSError or IOError as error:
 print('Se definen los coeficientes del determinante de 8x8')
 
 def coef(indice,r1,r2,ε1,ε2,ε3):
-    π = np.pi
-    μ0 = 1
-    c = 2.99792458*1e8 #m/s (SI units)
-    h = 4.135667731*1e-15 #eV/s
-    ħ = h/(2*π)
 
     E = Elist_NM[indice]
     kz_real = kz_real_min_NM[indice]
@@ -211,7 +206,7 @@ def coef(indice,r1,r2,ε1,ε2,ε3):
 
 #%%
 
-print('Calcular los coeficientes de los graficos')
+print('Calcular los coeficientes de los campos')
 
 lambdas = []
 autovectores = []
@@ -527,8 +522,8 @@ print('Graficar el campo E vs x para cada medio')
 n = len(Elist_NM2) - 1
 list_indice = [0,int(n*1/4),int(n*1/2),int(n*3/4),n]
 
-#indicecerca=np.argmin(np.abs(np.array(Elist_NM2)-Energy_paper*np.ones(len(Elist_NM2)))) #el indice más cerca de Energy_paper
-#list_indice=[int(indicecerca)]
+indicecerca=np.argmin(np.abs(np.array(Elist_NM2)-Energy_paper*np.ones(len(Elist_NM2)))) #el indice más cerca de Energy_paper
+list_indice=[int(indicecerca)]
 
 color = 0
 plt.figure(figsize=tamfig)
