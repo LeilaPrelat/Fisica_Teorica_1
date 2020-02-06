@@ -104,6 +104,8 @@ except OSError or IOError as error:
 
 #%%
 
+print('Se definen los coeficientes del determinante de 4x4')
+
 def coef(indice,R,ε2,ε3):
     
     E = Elist_NM[indice]
