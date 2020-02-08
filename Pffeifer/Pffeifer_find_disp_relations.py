@@ -242,7 +242,16 @@ if alfa==10:
         x0 = np.array([0.63,1e-1]) 
     elif modo_virtual ==12:
         K_list2 = np.linspace(0.001,0.63,N2)
-        x0 = np.array([0.63,1e-1]) 
+        x0 = np.array([0.64,1e-1]) 
+    elif modo_virtual ==13:
+        K_list2 = np.linspace(0.001,0.635,N2)
+        x0 = np.array([0.65,1e-1]) 
+    elif modo_virtual ==14:
+        K_list2 = np.linspace(0.001,0.635,N2)
+        x0 = np.array([0.66,1e-1])
+    elif modo_virtual ==15:
+        K_list2 = np.linspace(0.001,0.673,N2)
+        x0 = np.array([0.673,1e-1]) 
     elif modo_virtual == 16:
         K_list2 = np.linspace(0.001,0.6755,N2)
         x0 = np.array([0.67,1e-1])   
