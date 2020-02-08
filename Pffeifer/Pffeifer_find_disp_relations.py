@@ -183,32 +183,51 @@ np.savetxt('mod_real' + str(modo_real) + '_Kz.txt',[Kz_obt1],delimiter='\t')
 print('Hallar la relacion de dispersion del modo VIRTUAL %i' %(modo_virtual))
      
 N2 = int(5*1e3)
-K_list2 = np.linspace(0.001,0.71,N2)
+#K_list2 = np.linspace(0.001,0.71,N2)
 
 Omega_real_obt2 = []
 Omega_imag_obt2 = []
 Kz_obt2 = []
 
-if modo_virtual ==1:
-    if alfa==0.1: 
-        x0 = np.array([0.25,1e-15])
-    elif alfa==1:
-        K_list2 = np.linspace(0.001,0.49,N2)
-        x0 = np.array([0.6105,1e-1])
- 
-elif modo_virtual in [2,3,4,5]:
-    if alfa==0.1: 
-        x0 = np.array([0.7075,1e-1])
-    elif alfa==1:
-        K_list2 = np.linspace(0.001,0.7,N2)
-        if modo_virtual ==2:
-            x0 = np.array([0.63,1e-1])
-        else: 
-            x0 = np.array([0.7,1e-1])
-elif alfa==10:
-    if modo_virtual ==6:
+#if modo_virtual ==1:
+#    if alfa==0.1: 
+#        x0 = np.array([0.25,1e-15])
+#    elif alfa==1:
+#        K_list2 = np.linspace(0.001,0.49,N2)
+#        x0 = np.array([0.6105,1e-1])
+#    elif alfa == 10:
+#        K_list2 = np.linspace(0.01,0.1,N2)
+#        x0 = np.array([0.05,1e-1])            
+# 
+#elif modo_virtual in [2,3,4,5]:
+#    if alfa==0.1: 
+#        x0 = np.array([0.7075,1e-1])
+#    elif alfa==1:
+#        K_list2 = np.linspace(0.001,0.7,N2)
+#        if modo_virtual ==2:
+#            x0 = np.array([0.63,1e-1])
+#        else: 
+#            x0 = np.array([0.7,1e-1])
+         
+if alfa==10:  
+    if modo_virtual == 2:
+        K_list2 = np.linspace(0.001,0.32,N2)
+        x0 = np.array([0.153,1e-1])
+    elif modo_virtual == 3:
+        K_list2 = np.linspace(0.001,0.42,N2)
+        x0 = np.array([0.25,1e-1])
+    elif modo_virtual == 4:
+        K_list2 = np.linspace(0.001,0.452,N2)
+        x0 = np.array([0.33,1e-1])
+    elif modo_virtual == 5:
+        K_list2 = np.linspace(0.001,0.5,N2)
+        x0 = np.array([0.4,1e-1])
+    elif modo_virtual ==6:
         K_list2 = np.linspace(0.001,0.56,N2)
         x0 = np.array([0.3,1e-1])   
+    elif modo_virtual ==7:
+        K_list2 = np.linspace(0.001,0.6,N2)
+        x0 = np.array([0.51,1e-1])   
     elif modo_virtual == 16:
         K_list2 = np.linspace(0.001,0.6755,N2)
         x0 = np.array([0.67,1e-1])   
@@ -254,7 +273,7 @@ print('Graficar la relacion de dispersion obtenida')
 x = np.linspace(0.1,0.71,300)
     
 plt.figure(figsize=tamfig)
-plt.plot(Kz_obt1,Omega_real_obt1,'.',ms=8,color = lista_colores[0],alpha = 0.8,label='modo real')
+#plt.plot(Kz_obt1,Omega_real_obt1,'.',ms=8,color = lista_colores[0],alpha = 0.8,label='modo real')
 plt.plot(Kz_obt2,Omega_real_obt2,'.',ms=8,color = lista_colores[1],alpha = 0.8,label='modo virtual')
 plt.plot(x,x,'.-',ms=8,color = lista_colores[2],alpha = 0.8,label='Ω = K')
 plt.title('Relación de dispersión. Modo = %i, alfa = %.1f' %(modo,alfa),fontsize=tamtitle)
