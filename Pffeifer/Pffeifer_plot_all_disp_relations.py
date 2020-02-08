@@ -21,13 +21,13 @@ tamnum = 16
 
 direc_Pffeifer = r'/home/leila/Desktop/Teo1_definitivo2/Fisica_Teorica_1/Pffeifer'
 
-modo = 1
+modo = 5
 modo_real = modo
 modo_virtual = modo
 alfa = 1
 
 #%%
-print('Importar las relaciones de dispersion y graficar')
+print('Importar las relaciones de dispersion y graficar modo real y virtual')
 
 folder = 'alfa' + str(alfa)  
 os.chdir(direc_Pffeifer + '/' + folder)
@@ -66,8 +66,12 @@ plt.grid(1)
 print('Barrido de los modos virtuales')
 print('Importar las relaciones de dispersion y graficar')
 
-list_modos = [1,2,3,5]
-x = np.linspace(0.69,0.71,300)
+if alfa ==0.1:
+    list_modos = [1,2,3,5]
+    x = np.linspace(0.69,0.71,300)
+elif alfa ==1:
+    list_modos = [1,2,3,4,5,6]
+    x = np.linspace(0.45,0.75,300)
 
 color = 0
 plt.figure(figsize=tamfig)
@@ -90,15 +94,15 @@ for modo_virtual in list_modos:
         Omega_imag_obt2 = np.loadtxt('mod_virtual' + str(modo_virtual) + '_Im_Omega.txt',delimiter='\t')  
     
     
-    plt.plot(Kz_obt2,Omega_real_obt2,'.',ms=8,color=lista_colores[color],alpha=0.7,label='modo = %i' %(modo_virtual)) 
+    plt.plot(Kz_obt2,Omega_real_obt2,'.-',ms=8,color=lista_colores[color],alpha=0.7,label='modo = %i' %(modo_virtual)) 
 
 plt.title('Relación de dispersión. Modos virtuales. alfa = %.1f' %(alfa),fontsize=tamtitle)
 plt.plot(x,x,'.-',ms=8,color=lista_colores[color+1],alpha = 0.7,label='Ω = K')
 plt.ylabel('Ω',fontsize=tamletra)
 plt.xlabel('K',fontsize=tamletra)
-plt.ylim([0.69,0.71])
 plt.tick_params(labelsize = tamnum)
 plt.legend(loc='best',markerscale=3,fontsize=tamlegend)
 plt.grid(1)
+plt.ylim([x[0],x[-1]])
 
 #%%

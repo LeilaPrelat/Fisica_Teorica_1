@@ -8,7 +8,6 @@ from scipy import special #funciones de Bessel
 import numpy as np
 import os 
 import matplotlib.pyplot as plt
-from numpy import linalg as LA
 from scipy.optimize import minimize
 import scipy.optimize as opt
 
@@ -28,7 +27,7 @@ direc_Pffeifer = r'/home/leila/Desktop/Teo1_definitivo2/Fisica_Teorica_1/Pffeife
 modo = 1
 modo_real = modo
 modo_virtual = modo
-alfa = 0.1
+alfa = 1
 
 ver_comportamiento = 0
 
@@ -127,26 +126,36 @@ if ver_comportamiento==1:
 
 #%%
     
-print('Hallar la relacion de dispersion del modo REAL %i' %(modo))
+print('Hallar la relacion de dispersion del modo REAL %i' %(modo_real))
 
 Omega_real_obt1= []
 det_min = []
 Kz_obt1 = []
 
+tol = 1e-9
 N1 = int(1e3)
-if alfa==0.1:
-    K_list1 = np.linspace(0.71,24,N1)
-    x0 = 0.7
-elif alfa==1:
-    K_list1 = np.linspace(0.53,18,N1)
-    x0 = 0.51
-    
+if modo_real ==1:
+    if alfa==0.1:
+        K_list1 = np.linspace(0.71,24,N1)
+        x0 = 0.7
+    elif alfa==1:
+        K_list1 = np.linspace(0.53,18,N1)
+        x0 = 0.51
+elif modo_real ==5 and alfa==1:
+    K_list1 = np.linspace(0.71,18,N1)
+    x0 = 0.705   
+elif alfa==10:
+    if modo_real ==6:
+        K_list1 = np.linspace(0.56,18,N1)
+        x0 = 0.51   
+    elif modo_real == 16:
+        K_list1 = np.linspace(0.6755,18,N1)
+        x0 = 0.67    
+
 for Re_K in K_list1:
     def det_M_1variable(Ω):
         dett = det_M_real_modes([Re_K,0],Ω,modo_real,alfa)
         return np.abs(dett)
-       
-    tol = 1e-9
     minimos=opt.fsolve(det_M_1variable,x0,xtol=tol)    
 
     for j in range(len(minimos)):
@@ -173,7 +182,7 @@ np.savetxt('mod_real' + str(modo_real) + '_Kz.txt',[Kz_obt1],delimiter='\t')
 
 print('Hallar la relacion de dispersion del modo VIRTUAL %i' %(modo_virtual))
      
-N2 = int(5*1e2)
+N2 = int(5*1e3)
 K_list2 = np.linspace(0.001,0.71,N2)
 
 Omega_real_obt2 = []
@@ -184,8 +193,8 @@ if modo_virtual ==1:
     if alfa==0.1: 
         x0 = np.array([0.25,1e-15])
     elif alfa==1:
-        K_list2 = np.linspace(0.001,0.4725,N2)
-        x0 = np.array([0.6105,1e1])
+        K_list2 = np.linspace(0.001,0.49,N2)
+        x0 = np.array([0.6105,1e-1])
  
 elif modo_virtual in [2,3,4,5]:
     if alfa==0.1: 
@@ -196,6 +205,14 @@ elif modo_virtual in [2,3,4,5]:
             x0 = np.array([0.63,1e-1])
         else: 
             x0 = np.array([0.7,1e-1])
+elif alfa==10:
+    if modo_virtual ==6:
+        K_list2 = np.linspace(0.001,0.56,N2)
+        x0 = np.array([0.3,1e-1])   
+    elif modo_virtual == 16:
+        K_list2 = np.linspace(0.001,0.6755,N2)
+        x0 = np.array([0.67,1e-1])   
+
             
 for Re_K in K_list2:
 
@@ -237,7 +254,7 @@ print('Graficar la relacion de dispersion obtenida')
 x = np.linspace(0.1,0.71,300)
     
 plt.figure(figsize=tamfig)
-#plt.plot(Kz_obt1,Omega_real_obt1,'.',ms=8,color = lista_colores[0],alpha = 0.8,label='modo real')
+plt.plot(Kz_obt1,Omega_real_obt1,'.',ms=8,color = lista_colores[0],alpha = 0.8,label='modo real')
 plt.plot(Kz_obt2,Omega_real_obt2,'.',ms=8,color = lista_colores[1],alpha = 0.8,label='modo virtual')
 plt.plot(x,x,'.-',ms=8,color = lista_colores[2],alpha = 0.8,label='Ω = K')
 plt.title('Relación de dispersión. Modo = %i, alfa = %.1f' %(modo,alfa),fontsize=tamtitle)
