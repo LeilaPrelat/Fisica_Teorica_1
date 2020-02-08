@@ -189,28 +189,30 @@ Omega_real_obt2 = []
 Omega_imag_obt2 = []
 Kz_obt2 = []
 
-#if modo_virtual ==1:
-#    if alfa==0.1: 
-#        x0 = np.array([0.25,1e-15])
-#    elif alfa==1:
-#        K_list2 = np.linspace(0.001,0.49,N2)
-#        x0 = np.array([0.6105,1e-1])
-#    elif alfa == 10:
-#        K_list2 = np.linspace(0.01,0.1,N2)
-#        x0 = np.array([0.05,1e-1])            
-# 
-#elif modo_virtual in [2,3,4,5]:
-#    if alfa==0.1: 
-#        x0 = np.array([0.7075,1e-1])
-#    elif alfa==1:
-#        K_list2 = np.linspace(0.001,0.7,N2)
-#        if modo_virtual ==2:
-#            x0 = np.array([0.63,1e-1])
-#        else: 
-#            x0 = np.array([0.7,1e-1])
+if alfa==1:
+    if modo_virtual ==1:
+        K_list2 = np.linspace(0.001,0.49,N2)
+        x0 = np.array([0.6105,1e-1])        
+    elif modo_virtual ==2:
+        K_list2 = np.linspace(0.001,0.7,N2)
+        x0 = np.array([0.63,1e-1])
+    else:
+        K_list2 = np.linspace(0.001,0.7,N2)
+        x0 = np.array([0.7,1e-1])
+        
+if alfa==0.1:
+    if modo_virtual ==1:
+        K_list2 = np.linspace(0.001,0.71,N2)
+        x0 = np.array([0.25,1e-15])
+    else:
+        K_list2 = np.linspace(0.001,0.7,N2)
+        x0 = np.array([0.7075,1e-1])
          
-if alfa==10:  
-    if modo_virtual == 2:
+if alfa==10:
+    if modo_virtual ==1:
+        K_list2 = np.linspace(0.001,0.49,N2)
+        x0 = np.array([0.6105,1e-1])        
+    elif modo_virtual == 2:
         K_list2 = np.linspace(0.001,0.32,N2)
         x0 = np.array([0.153,1e-1])
     elif modo_virtual == 3:
