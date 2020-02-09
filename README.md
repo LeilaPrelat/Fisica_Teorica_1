@@ -1,6 +1,6 @@
 ## Project for Final exam of electrodynamics (Física Teórica 1) 
 
-Here are the codes needed to make the graphics of the mentioned project and you can view it in this link: https://www.overleaf.com/read/vwdnjwchgqwc
+Here are the codes needed to make the graphs of the mentioned project and you can view it in this link: https://www.overleaf.com/read/vwdnjwchgqwc
 
 This project studies the behavior of a cylinder with 3 or 2 different mediums. A system of equations (matrix) was create using boundary conditions (the cladding of the cylinder is considered infinite). The procedure consists on the minimization of the determinant of that matrix and Nelder-Mead was the minimization routine used. The objective of this work was to reproduce the graphs and formulas of two papers:
 
