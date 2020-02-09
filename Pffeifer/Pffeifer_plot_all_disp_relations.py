@@ -24,7 +24,7 @@ direc_Pffeifer = r'/home/leila/Desktop/Teo1_definitivo2/Fisica_Teorica_1/Pffeife
 modo = 5
 modo_real = modo
 modo_virtual = modo
-alfa = 1
+alfa = 10
 
 #%%
 print('Importar las relaciones de dispersion y graficar modo real y virtual')
