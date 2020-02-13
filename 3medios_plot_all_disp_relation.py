@@ -203,7 +203,7 @@ if ε1==ε_Ag:
     kz_imag_min_NM2 = np.array(kz_imag_min_NM)*1e-8
     plt.title(title +', R2 = %i nm' %(R2*1e9),fontsize=tamtitle)
     plt.plot(np.abs(kz_imag_min_NM2),Elist_NM,'.',ms=10,color=lista_colores[color+1],alpha=0.7,label='modo = %i, R1 = %i nm' %(modo,int(R1*1e9))) 
-    plt.xlabel('Re($k_z$) [x 10$^8$ m$^{-1}$]',fontsize=tamletra)
+    plt.xlabel('Im($k_z$) [x 10$^8$ m$^{-1}$]',fontsize=tamletra)
     plt.ylabel('Energy [eV]',fontsize=tamletra)
     plt.tick_params(labelsize = tamnum)
     plt.legend(loc='best',markerscale=3,fontsize=tamlegend)
